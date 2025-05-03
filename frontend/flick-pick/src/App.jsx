@@ -1,26 +1,41 @@
 import {
-  BrowserRouter as Router,
   Routes,
+  BrowserRouter as Router,
   Route,
   Navigate,
 } from "react-router-dom";
 import React from "react";
+
 import LoginForm from "./pages/auth/loginForm";
-import SignUpForm from "./pages/Auth/SignUpForm";
-import Home from "./pages/Dashboard/Home";
+import SignUpForm from "./pages/auth/signupForm";
+import Home from "./pages/dashboard/Home";
+import CreatePoll from "./pages/dashboard/createPoll";
+import Logout from "./pages/dashboard/logout";
+import Settings from "./pages/dashboard/settings";
 
 const App = () => {
+  const isAuthenticated = !!localStorage.getItem("token");
+
   return (
     <div>
       <Router>
         <Routes>
-          <Route path="/" element={<Root />} />
+          <Route
+            path="/"
+            element={
+              isAuthenticated ? (
+                <Navigate to="/dashboard" replace />
+              ) : (
+                <Navigate to="/login" replace />
+              )
+            }
+          />
           <Route path="/login" element={<LoginForm />} />
-          <Route path="/signUp" element={<SignUpForm />} />
+          <Route path="/signup" element={<SignUpForm />} />
           <Route path="/dashboard" element={<Home />} />
-          <Route path="/create-poll" element={<CreatePoll />} />
-          <Route path="/logout" element={<Logout />} />
+          <Route path="/createPoll" element={<CreatePoll />} />
           <Route path="/settings" element={<Settings />} />
+          <Route path="/logout" element={<Logout />} />
         </Routes>
       </Router>
     </div>
@@ -28,13 +43,3 @@ const App = () => {
 };
 
 export default App;
-
-const Root = () => {
-  const isAuthenticated = !!localStorage.getItem("token");
-
-  return isAuthenticated ? (
-    <Navigate to="/dashboard" />
-  ) : (
-    <Navigate to="/login" />
-  );
-};
