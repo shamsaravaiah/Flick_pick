@@ -10,6 +10,10 @@ export default {
         primary: '#06b6d4', 
         secondary: '#EF863E'
       },
+      backgroundImage: {
+        'auth-bg-img': "url('/src/assets/images/auth-bg.jpg')",
+        'profile-bg-img': "url('/src/assets/images/profile-bg.jpg')",
+      }, 
     },
   },
   plugins: [],

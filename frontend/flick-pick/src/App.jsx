@@ -6,7 +6,7 @@ import {
 } from "react-router-dom";
 import React from "react";
 
-import LoginForm from "./pages/auth/loginForm";
+import LoginForm from "./pages/auth/LoginForm";
 import SignUpForm from "./pages/auth/signupForm";
 import Home from "./pages/dashboard/Home";
 import CreatePoll from "./pages/dashboard/createPoll";
