@@ -1,20 +1,21 @@
+// tailwind.config.js
 /** @type {import('tailwindcss').Config} */
 export default {
   content: [
     "./index.html",
-    "./src/**/*.{js,ts,jsx,tsx}",
-  ],  
+    "./src/**/*.{js,ts,jsx,tsx,css}",
+  ],
   theme: {
     extend: {
       colors: {
-        primary: '#06b6d4', 
-        secondary: '#EF863E'
+        primary: '#06b6d4',
+        secondary: '#EF863E',
       },
       backgroundImage: {
         'auth-bg-img': "url('/src/assets/images/auth-bg.jpg')",
         'profile-bg-img': "url('/src/assets/images/profile-bg.jpg')",
-      }, 
+      },
     },
   },
   plugins: [],
-}
+};
