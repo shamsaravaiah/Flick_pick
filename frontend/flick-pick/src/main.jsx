@@ -1,12 +1,11 @@
-import React from 'react';
-import ReactDOM from 'react-dom/client';
-import App from './App.jsx';
-import './index.css'; // ✅ Correct place for Tailwind
+import { StrictMode } from 'react'
+import { createRoot } from 'react-dom/client'
+import './index.css'
+import App from './App.jsx'
 
-
-
-ReactDOM.createRoot(document.getElementById('root')).render(
-  <React.StrictMode>
+createRoot(document.getElementById('root')).render(
+  // Enable when deploying
+  // <StrictMode> // remove these comments on this tage when deploying
     <App />
-  </React.StrictMode>,
-);
+  // </StrictMode>,
+)
