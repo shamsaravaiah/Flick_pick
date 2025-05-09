@@ -115,6 +115,6 @@ exports.getUserInfo = async (req, res) => {
     }; 
     res.status(200).json(userInfo);
     }catch (error) {
-      res.status(500).json({ message: "Error fetching user", error: error.message });
+      res.stats(500).json({ message: "Error fetching user", error: error.message });
     }
 };
