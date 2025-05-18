@@ -1,4 +1,3 @@
-// tailwind.config.js
 /** @type {import('tailwindcss').Config} */
 export default {
   content: [
@@ -10,6 +9,7 @@ export default {
       colors: {
         primary: '#06b6d4',
         secondary: '#EF863E',
+        primaryYellow: '#fec51a',  // ✅ Added yellow here
       },
       backgroundImage: {
         'auth-bg-img': "url('/src/assets/images/auth-bg.jpg')",
