@@ -1,8 +1,13 @@
-import React, { useState } from "react";
-import { Link, useNavigate } from "react-router-dom"; // Added Link import
+import React, { useState, useContext } from "react";
+import { Link, useNavigate } from "react-router-dom"; 
 import AuthLayout from "../../components/layout/AuthLayout";
 import ProfilePhotoSelector from "../../components/input/ProfilePhotoSelector";
-import AuthInput from "../../components/input/AuthInput"; // Added AuthInput import
+import AuthInput from "../../components/input/AuthInput"; 
+import { validateEmail } from "../../utils/helper";
+import { UserContext } from "../../context/UserContext";
+import axiosInstance from "../../utils/axiosInstance";
+import { API_PATHS } from "../../utils/apiPaths";
+import uploadImage from "../../utils/uploadImage";
 
 const SignUpForm = () => {
   const [profilePic, setProfilePic] = useState(null);
@@ -14,16 +19,16 @@ const SignUpForm = () => {
   const [error, setError] = useState(null);
 
   const navigate = useNavigate();
+  const { updateUser } = useContext(UserContext);
 
   const handleSignUp = async (e) => {
     e.preventDefault();
 
-    // Validation logic
     if (!fullName) {
       setError("Please enter your full name.");
       return;
     }
-    if (!email.includes("@")) {
+    if (!validateEmail(email)) {
       setError("Please enter a valid email address.");
       return;
     }
@@ -38,12 +43,35 @@ const SignUpForm = () => {
 
     setError(null);
 
-    // Simulate API call
     try {
-      console.log("Sign-up successful!");
-      navigate("/dashboard");
+      let profileImageUrl = "";
+
+      if (profilePic) {
+        const imgUploadRes = await uploadImage(profilePic);
+        profileImageUrl = imgUploadRes.imageUrl || "";
+      }
+
+      const response = await axiosInstance.post(API_PATHS.AUTH.REGISTER, {
+        fullName,
+        username,
+        email,
+        password,
+        profileImageUrl,
+      });
+
+      const { token, user } = response.data;
+
+      if (token) {
+        localStorage.setItem("token", token);
+        updateUser(user);
+        navigate("/dashboard");
+      }
     } catch (err) {
-      setError("An error occurred. Please try again.");
+      if (err.response && err.response.data.message) {
+        setError(err.response.data.message);
+      } else {
+        setError("An error occurred. Please try again.");
+      }
     }
   };
 
@@ -95,19 +123,20 @@ const SignUpForm = () => {
           {error && <p className="text-red-500 text-xs pb-2.5">{error}</p>}
 
           <button
-                type="submit"
-                className="w-full text-sm font-medium text-white shadow-lg p-[10px] rounded-md my-1 transition-all duration-200 ease-in-out hover:opacity-90"
-                style={{ backgroundColor: "#fec51a" }}
-              >
-                CREATE ACCOUNT
+            type="submit"
+            className="w-full text-sm font-medium text-white shadow-lg p-[10px] rounded-md my-1 transition-all duration-200 ease-in-out hover:opacity-90"
+            style={{ backgroundColor: "#fec51a" }}
+          >
+            CREATE ACCOUNT
           </button>
           <p className="text-[13px] text-slate-800 mt-3">
             Already have an account?{" "}
             <Link
-                to="/signup"
-                className="font-medium underline"
-                style={{ color: "#fec51a" }}          >
-                Login
+              to="/signup"
+              className="font-medium underline"
+              style={{ color: "#fec51a" }}
+            >
+              Login
             </Link>
           </p>
         </form>

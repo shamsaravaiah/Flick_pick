@@ -1,9 +1,12 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import AuthLayout from "../../components/layout/AuthLayout";
 import AuthInput from "../../components/input/AuthInput"; 
 import { Link } from "react-router-dom"; 
 import { validateEmail } from "../../utils/helper"; 
+import axiosInstance from "../../utils/axiosInstance";
+import { API_PATHS } from "../../utils/apiPaths";
+import { UserContext } from "../../context/UserContext";
 
 const LoginForm = () => {
   const [email, setEmail] = useState("");
@@ -11,6 +14,7 @@ const LoginForm = () => {
   const [error, setError] = useState(null);
 
   const navigate = useNavigate();
+  const { updateUser } = useContext(UserContext);
 
   const handleLogin = async (e) => {
     e.preventDefault();
@@ -26,11 +30,24 @@ const LoginForm = () => {
     setError("");
     // login api 
     try {
+      const response = await axiosInstance.post(API_PATHS.AUTH.LOGIN, {
+        email,
+        password,
+      });
+      const { token, user } = response.data;
 
-    } catch (err) {
-     
+      if (token) {
+        localStorage.setItem("token", token);
+        updateUser(user);
+        navigate("/dashboard");
+      }
+    } catch (error) {
+      if (error.response && error.response.data.message) {
+        setError(error.response.data.message);
+      } else {
+        setError("Something went wrong. Please try again.");
+      }
     }
-
   };
 
   return (
@@ -59,21 +76,21 @@ const LoginForm = () => {
           />
           {error && <p className="text-red-500 text-xs pb-2.5">{error}</p>}
           <button
-                type="submit"
-                className="w-full text-sm font-medium text-white shadow-lg p-[10px] rounded-md my-1 transition-all duration-200 ease-in-out hover:opacity-90"
-                style={{ backgroundColor: "#fec51a" }}
-              >
-                LOGIN
+            type="submit"
+            className="w-full text-sm font-medium text-white shadow-lg p-[10px] rounded-md my-1 transition-all duration-200 ease-in-out hover:opacity-90"
+            style={{ backgroundColor: "#fec51a" }}
+          >
+            LOGIN
           </button>
           <p className="text-[13px] text-slate-800 mt-3">
-              Don’t have an account?{" "}
-              <Link
-                to="/signup"
-                className="font-medium underline"
-                style={{ color: "#fec51a" }}
-              >
-                SignUp
-              </Link>
+            Don’t have an account?{" "}
+            <Link
+              to="/signup"
+              className="font-medium underline"
+              style={{ color: "#fec51a" }}
+            >
+              SignUp
+            </Link>
           </p>
         </form>
       </div>

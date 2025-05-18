@@ -1,22 +1,25 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import DashboardLayout from "../../components/layout/DashboardLayout";
 import useUserAuth from "../../hooks/useUserAuth";
 import { useNavigate } from "react-router-dom";
 import HeaderWithFilter from "../../components/layout/HeaderWithFilter";
 import axiosInstance from "../../utils/axiosInstance";
 import { API_PATHS } from "../../utils/apiPaths";
-import PollCard from "../../components/PollCards/PollCard";
+import PollCard from "../../components/Pollcards/PollCard";
 
 import InfiniteScroll from "react-infinite-scroll-component";
-import CREATE_ICON from "../../assets/images/my-poll-icon.png";
+import { UserContext } from "../../context/UserContext";
 import EmptyCard from "../../components/cards/EmptyCard";
+
+import CREATE_ICON from "../../assets/images/my-poll-icon.png";
 
 const PAGE_SIZE = 10;
 
-const Home = () => {
+const MyPolls = () => {
   useUserAuth();
 
-  const navigate = useNavigate();
+  const {user} = useContext(UserContext)
+  const navigate = useNavigate()
 
   const [allPolls, setAllPolls] = useState([]);
   const [stats, setStats] = useState([]);
@@ -33,7 +36,7 @@ const Home = () => {
 
     try {
       const response = await axiosInstance.get(
-        `${API_PATHS.POLLS.GET_ALL}?page=${overridePage}&limit=${PAGE_SIZE}&type=${filterType}`
+        `${API_PATHS.POLLS.GET_ALL}?page=${overridePage}&limit=${PAGE_SIZE}&type=${filterType}&creatorId=${user._id}`
       );
 
       if (response.data?.polls?.length > 0) {
@@ -54,15 +57,15 @@ const Home = () => {
     }
   };
 
-  const loadMorePolls = () => {
+  const loadMorePolls =()=>{
     setPage((prevPage) => prevPage + 1);
-  };
+  }
 
   useEffect(() => {
     setPage(1);
     fetchAllPolls(1);
     return () => {};
-  }, [filterType]);
+  }, [filterType, user]);
 
   useEffect(() => {
     if (page !== 1) {
@@ -72,10 +75,10 @@ const Home = () => {
   }, [page]);
 
   return (
-    <DashboardLayout activeMenu="Dashboard" stats={stats || []} showStats>
+    <DashboardLayout activeMenu="My Polls">
       <div className="my-5 mx-auto">
         <HeaderWithFilter
-          title="Polls"
+          title="My Polls"
           filterType={filterType}
           setFilterType={setFilterType}
         />
@@ -94,7 +97,7 @@ const Home = () => {
           next={loadMorePolls}
           hasMore={hasMore}
           loader={<h4 className="info-text">Loading...</h4>}
-          endMessage={<p className="info-text">No more polls to display.</p>}
+          // endMessage={<p className="info-text">No more polls to display.</p>}
         >
           {allPolls.map((poll) => (
             <PollCard
@@ -111,6 +114,7 @@ const Home = () => {
               userHasVoted={poll.userHasVoted || false}
               isPollClosed={poll.closed || false}
               createdAt={poll.createdAt || false}
+              isMyPoll
             />
           ))}
         </InfiniteScroll>
@@ -119,4 +123,4 @@ const Home = () => {
   );
 };
 
-export default Home;
+export default MyPolls;
