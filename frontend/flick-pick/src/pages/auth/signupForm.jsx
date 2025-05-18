@@ -132,7 +132,7 @@ const SignUpForm = () => {
           <p className="text-[13px] text-slate-800 mt-3">
             Already have an account?{" "}
             <Link
-              to="/signup"
+              to="/login"
               className="font-medium underline"
               style={{ color: "#fec51a" }}
             >
