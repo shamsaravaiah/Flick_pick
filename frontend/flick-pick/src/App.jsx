@@ -1,45 +1,62 @@
 import {
-  Routes,
   BrowserRouter as Router,
+  Routes,
   Route,
   Navigate,
 } from "react-router-dom";
 import React from "react";
-
 import LoginForm from "./pages/auth/loginForm";
 import SignUpForm from "./pages/auth/signupForm";
-import Home from "./pages/dashboard/Home";
-import CreatePoll from "./pages/dashboard/createPoll";
-import Logout from "./pages/dashboard/logout";
-import Settings from "./pages/dashboard/settings";
+import Home from "./pages/Dashboard/Home";
+import CreatePoll from "./pages/Dashboard/CreatePoll";
+import MyPolls from "./pages/dashboard/Mypolls";
+import VotedPolls from "./pages/dashboard/VotedPolls";
+import Bookmarks from "./pages/dashboard/Bookmarks";
+import UserProvider from "./context/UserContext";
+
+import { Toaster } from "react-hot-toast";
 
 const App = () => {
-  const isAuthenticated = !!localStorage.getItem("token");
-
   return (
     <div>
-      <Router>
-        <Routes>
-          <Route
-            path="/"
-            element={
-              isAuthenticated ? (
-                <Navigate to="/dashboard" replace />
-              ) : (
-                <Navigate to="/login" replace />
-              )
-            }
-          />
-          <Route path="/login" element={<LoginForm />} />
-          <Route path="/signup" element={<SignUpForm />} />
-          <Route path="/dashboard" element={<Home />} />
-          <Route path="/createPoll" element={<CreatePoll />} />
-          <Route path="/settings" element={<Settings />} />
-          <Route path="/logout" element={<Logout />} />
-        </Routes>
-      </Router>
+      <UserProvider>
+        <Router>
+          <Routes>
+            <Route path="/" element={<Root />} />
+            <Route path="/login" exact element={<LoginForm />} />
+            <Route path="/signUp" exact element={<SignUpForm />} />
+            <Route path="/dashboard" exact element={<Home />} />
+            <Route path="/create-poll" exact element={<CreatePoll />} />
+            <Route path="/my-polls" exact element={<MyPolls />} />
+            <Route path="/voted-polls" exact element={<VotedPolls />} />
+            <Route path="/bookmarked-polls" exact element={<Bookmarks />} />
+          </Routes>
+        </Router>
+
+        <Toaster
+          toastOptions={{
+            className: "",
+            style: {
+              fontSize:'13px'
+            },
+          }}
+        />
+      </UserProvider>
     </div>
   );
 };
 
 export default App;
+
+// Define the Root component to handle the initial redirect
+const Root = () => {
+  // Check if token exists in localStorage
+  const isAuthenticated = !!localStorage.getItem("token");
+
+  // Redirect to dashboard if authenticated, otherwise to login
+  return isAuthenticated ? (
+    <Navigate to="/dashboard" />
+  ) : (
+    <Navigate to="/login" />
+  );
+};
