@@ -20,25 +20,29 @@ const UserDetailsCard = ({
 }) => {
   return (
     <div className="bg-slate-100/50 rounded-lg mt-16 overflow-hidden">
-      <div className="w-full h-32 bg-profile-bg--img bg-cover flex justify-center bg-sky-500 relative">
-        <div className="absolute -bottom-10 rounded-full overflow-hidden border-2 border-primary">
+      
+      {/* Header with yellow background */}
+      <div className="w-full h-32 bg-profile-bg--img bg-cover flex justify-center bg-[#fec51a] relative">
+        <div className="absolute -bottom-10 rounded-full overflow-hidden border-2 border-[#fec51a]">
           {profileImageUrl ? (
             <img
               src={profileImageUrl || ""}
               alt="Profile Image"
-              className="w-20 h-20 bg-slate-400 rounded-full"
+              className="w-20 h-20 rounded-full"
+              style={{ backgroundColor: "#fec51a" }}
             />
           ) : (
             <CharAvatar
               fullName={fullname}
               width="w-20"
               height="h-20"
-              style="text-xl"
+              style="text-xl bg-[#fec51a] text-black"
             />
           )}
         </div>
       </div>
 
+      {/* User Info */}
       <div className="mt-12 px-5">
         <div className="text-center pt-1">
           <h5 className="text-lg text-gray-950 font-medium leading-6">
@@ -49,6 +53,7 @@ const UserDetailsCard = ({
           </span>
         </div>
 
+        {/* Stats */}
         <div className="flex items-center justify-center gap-5 flex-wrap my-6">
           <StatsInfo label="Polls Created" value={totalPollsCreated || 0} />
           <StatsInfo label="Polls Voted" value={totalPollsVotes || 0} />
