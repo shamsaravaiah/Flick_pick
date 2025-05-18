@@ -7,7 +7,7 @@ import {
 import React from "react";
 import LoginForm from "./pages/auth/loginForm";
 import SignUpForm from "./pages/auth/signupForm";
-import Home from "./pages/Dashboard/Home";
+import Home from "./pages/dashboard/Home";
 import CreatePoll from "./pages/Dashboard/CreatePoll";
 import MyPolls from "./pages/dashboard/Mypolls";
 import VotedPolls from "./pages/dashboard/VotedPolls";
