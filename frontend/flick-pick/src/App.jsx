@@ -8,7 +8,7 @@ import React from "react";
 import LoginForm from "./pages/auth/loginForm";
 import SignUpForm from "./pages/auth/signupForm";
 import Home from "./pages/dashboard/Home";
-import CreatePoll from "./pages/dashboard/CreatePoll";
+import CreatePoll from "./pages/dashboard/CreatePoll";//case 
 import MyPolls from "./pages/dashboard/Mypolls";
 import VotedPolls from "./pages/dashboard/VotedPolls";
 import Bookmarks from "./pages/dashboard/Bookmarks";
