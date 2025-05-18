@@ -1,14 +1,17 @@
 import React from "react";
-import UI_ELEMENT from "../../assets/images/triangle_ui.png"; // Adjust the path as needed
-import CARD_1 from "../../assets/images/card-4.png"; // Adjust the path as needed
-import CARD_2 from "../../assets/images/card-2.png"; // Adjust the path as needed
-import CARD_3 from "../../assets/images/card-3.png"; // Adjust the path as needed
+
+import UI_ELEMENT from '../../assets/images/ui-element.png'
+import CARD_1 from '../../assets/images/auth-card-1.png'
+import CARD_2 from '../../assets/images/auth-card-2.png'
+import CARD_3 from '../../assets/images/auth-card-3.png'
 
 const AuthLayout = ({ children }) => {
   return (
     <div className="flex">
-      <div className="w-screen h-screen md:w-1/2 px-12 pt-8 pb-12">
-        <h2 className="text-lg font-medium text-black">Flick Pick</h2>
+        <div className="w-screen h-screen md:w-1/2 px-12 pt-8 pb-12">
+        <div className="bg-[#fec51a] p-4 rounded-md inline-block">
+      <h2 className="text-4xl font-medium text-black">Flick Pick</h2> 
+    </div>
         {children}
       </div>
       <div className="hidden md:block w-1/2 h-screen bg-sky-50 bg-auth-bg-img bg-cover bg-no-repeat bg-center overflow-hidden relative">
