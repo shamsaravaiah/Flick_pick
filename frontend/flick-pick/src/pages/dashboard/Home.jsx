@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 import HeaderWithFilter from "../../components/layout/HeaderWithFilter";
 import axiosInstance from "../../utils/axiosInstance";
 import { API_PATHS } from "../../utils/apiPaths";
-import PollCard from "../../components/PollCards/PollCard";
+import PollCard from "../../components/Pollcards/PollCard";
 
 import InfiniteScroll from "react-infinite-scroll-component";
 import CREATE_ICON from "../../assets/images/my-poll-icon.png";

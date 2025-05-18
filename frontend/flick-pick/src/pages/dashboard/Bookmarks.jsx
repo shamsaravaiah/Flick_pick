@@ -4,7 +4,7 @@ import useUserAuth from "../../hooks/useUserAuth";
 import { useNavigate } from "react-router-dom";
 import axiosInstance from "../../utils/axiosInstance";
 import { API_PATHS } from "../../utils/apiPaths";
-import PollCard from "../../components/PollCards/PollCard";
+import PollCard from "../../components/Pollcards/PollCard";
 
 import BOOKMARK_ICON from "../../assets/images/bookmark-icon.png";
 import EmptyCard from "../../components/cards/EmptyCard";
