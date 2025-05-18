@@ -20,7 +20,7 @@ const App = () => {
   return (
     <div>
       <UserProvider>
-        <Router>
+      
           <Routes>
             <Route path="/" element={<Root />} />
             <Route path="/login" exact element={<LoginForm />} />
@@ -31,7 +31,7 @@ const App = () => {
             <Route path="/voted-polls" exact element={<VotedPolls />} />
             <Route path="/bookmarked-polls" exact element={<Bookmarks />} />
           </Routes>
-        </Router>
+     
 
         <Toaster
           toastOptions={{
