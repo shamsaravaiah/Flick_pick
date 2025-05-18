@@ -1,8 +1,8 @@
 import React from "react";
-import UI_ELEMENT from "../../assets/images/triangle_ui.png"; // Adjust the path as needed
-import CARD_1 from "../../assets/images/card-4.png"; // Adjust the path as needed
-import CARD_2 from "../../assets/images/card-2.png"; // Adjust the path as needed
-import CARD_3 from "../../assets/images/card-3.png"; // Adjust the path as needed
+import UI_ELEMENT from "../../assets/images/ui-element.png"; 
+import CARD_1 from "../../assets/images/auth-card-4.png"; 
+import CARD_2 from "../../assets/images/auth-card-2.png"; 
+import CARD_3 from "../../assets/images/auth-card-3.png"; 
 
 const AuthLayout = ({ children }) => {
   return (
